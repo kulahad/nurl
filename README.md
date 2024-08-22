@@ -5,8 +5,7 @@ Nurl (Nano URL) is a simple, open-source URL shortener built with Next.js, Mongo
 ## Features
 
 - Shorten long URLs to easily shareable nano links
-- Custom short URL slugs (optional)
-- Click tracking and basic analytics
+- Custom short URL slugs (coming soon)
 - Responsive design
 
 ## Tech Stack
