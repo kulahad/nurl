@@ -19,7 +19,10 @@ export default async function Home() {
 
       <div className=" flex flex-col m-auto w-3/4">
         <p className="text-xl font-bold">Enter url to shorten</p>
-        <Form className="grid grid-cols-4" updateItemAction={getDataFromForm}>
+        <Form
+          className=" flex md:grid md:grid-cols-4"
+          updateItemAction={getDataFromForm}
+        >
           <Input
             className="col-span-3 text-black my-2 "
             name="url"
