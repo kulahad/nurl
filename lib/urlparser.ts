@@ -3,6 +3,7 @@
 import { Collection } from "mongodb";
 import client from "./mongodb";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 const schema = z
   .string()
@@ -41,24 +42,41 @@ export const getURLFromId = async (id: string) => {
   return nurl.url;
 };
 
+export const getIdFromURL = async (url: string) => {
+  if (!url) {
+    return null;
+  }
+
+  var nurl = await client.db("nurl").collection("urls").findOne({ url: url });
+
+  if (!nurl) {
+    return null;
+  }
+
+  return nurl.miniId;
+};
+
 export async function getDataFromForm(
   prevstate: any,
   formdata: FormData
-): Promise<{ message: string }> {
+): Promise<{ message: string; data: string; error: string }> {
   try {
     const parsedURL = schema.parse(formdata.get("url"));
     const id = await processURLfromUser(new URL(parsedURL));
-
-    return { message: "" };
+    return { message: "", data: id?.miniId, error: "" };
   } catch (error) {
     if (error instanceof z.ZodError) {
       for (const issue of error.issues) {
-        return { message: `Validation failed: ${issue.message}` };
+        return {
+          error: `Validation failed: ${issue.message}`,
+          data: "",
+          message: "",
+        };
       }
     } else {
-      return { message: `Unexpected error: ${error}` };
+      return { error: `Unexpected error: ${error}`, data: "", message: "" };
     }
   }
 
-  return { message: "" };
+  return { message: "", data: "", error: "" };
 }
