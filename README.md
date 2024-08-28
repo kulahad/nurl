@@ -53,3 +53,5 @@ Contributions to Nurl are welcome! Please feel free to submit a Pull Request.
 ## License
 
 Nurl is open source and available under the [MIT License](LICENSE).
+
+Got inspired by [roadmaps.sh](https://roadmap.sh/projects/url-shortening-service) with fontend baked in.
