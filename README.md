@@ -30,8 +30,10 @@ Nurl now supports generating QR codes for shortened URLs. This feature allows us
 1. Clone the repository:
 2. Install dependencies: `npm i`
 3. Set up environment variables:
-4. Create a `.env.local` file in the root directory and add the following: 
-         1. `MONGODB_URI` - your mongo db instance ( make a db named `nurl` and a collection named `urls`)
+4. Update the `.env` file in the root directory with the following: 
+      1. `MONGODB_URI` - your mongo db instance url (hosted or local)
+      2. `MONGODB_DBNAME` - your mongo db name
+      3. `MONGODB_COLLECTION` -your mongo collection name
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to see Nurl in action.
 
 ## Deployment
@@ -54,4 +56,4 @@ Contributions to Nurl are welcome! Please feel free to submit a Pull Request.
 
 Nurl is open source and available under the [MIT License](LICENSE).
 
-Got inspired by [roadmaps.sh](https://roadmap.sh/projects/url-shortening-service) with fontend baked in.
+Got inspired by [roadmaps.sh](https://roadmap.sh/projects/url-shortening-service) but with fontend baked in.
