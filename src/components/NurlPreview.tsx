@@ -24,8 +24,10 @@ const NurlPreview: React.FC<NurlPreviewProps> = ({ url }) => {
 
   return (
     <div className="flex flex-col m-auto">
+      <h1 className="mx-auto text-center my-2 text-5xl font-extrabold bg-gradient-to-tr from-white to-green-700 bg-clip-text text-transparent">
+        Nurl Preview
+      </h1>
       <div className="flex mb-2 justify-evenly">
-        <h1 className="my-auto">Nurl Preview</h1>
         <Button
           className="my-auto p-2 border border-green-500 rounded-md hover:bg-green-400"
           onClick={() => window.location.reload()}
@@ -44,7 +46,7 @@ const NurlPreview: React.FC<NurlPreviewProps> = ({ url }) => {
       </div>
       <div className="flex flex-col">
         <Button
-          className="mx-auto my-2 w-2/5 p-2 border border-blue-500 rounded-md hover:bg-blue-400"
+          className="mx-auto my-2 w-2/5 p-2 border border-blue-500 rounded-md hover:bg-blue-400 text-wrap"
           onClick={downloadQRCode}
         >
           Download QR Code
