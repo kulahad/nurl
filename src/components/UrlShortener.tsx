@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React, { ReactNode, Suspense } from "react";
 import { useFormState } from "react-dom";
 import NurlPreview from "./NurlPreview";
@@ -17,25 +16,23 @@ export function UrlShortener({
   children: ReactNode;
   className: string;
 }) {
-  const [state, action] = useFormState(updateItemAction, null);
-  const GetPath = () => {
-    const router = usePathname();
-    console.log(router);
-    return null;
-  };
+  const [state, action, isPending] = useFormState(updateItemAction, null);
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  } else if (state?.data) {
+    return <NurlPreview url={`${window.location}${state.data}`} />;
+  }
 
   return (
     <>
       <Suspense fallback={<div>Loading</div>}>
         <p className="text-sm font-semibold text-orange-400">{state?.error}</p>
       </Suspense>
-      {state?.data ? (
-        <NurlPreview url={`${window.location}${state.data}`} />
-      ) : (
-        <form className={className} action={action}>
-          {children}
-        </form>
-      )}
+      <form className={className} action={action}>
+        {isPending}
+        {children}
+      </form>
     </>
   );
 }

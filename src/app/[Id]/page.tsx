@@ -1,4 +1,7 @@
+"use server";
+
 import { getURLFromId } from "@/lib/urlparser";
+import { ErrorPage } from "@/src/components";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -9,7 +12,7 @@ async function page({ params }: { params: { Id: string } }) {
     redirect(nurl);
   }
 
-  return <div>Not Found</div>;
+  return <ErrorPage />;
 }
 
 export default page;
