@@ -1,10 +1,14 @@
 import { MongoClient } from "mongodb";
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
-}
+const getDbUri = (): string => {
+  if (!process.env.MONGODB_URI && process.env.NODE_ENV === "production") {
+    console.warn('Invalid/Missing environment variable: "MONGODB_URI"');
+  }
 
-const uri = process.env.MONGODB_URI;
+  return process.env.MONGODB_URI
+    ? process.env.MONGODB_URI
+    : "mongodb://localhost:27017";
+};
 
 let client: MongoClient;
 
@@ -16,12 +20,12 @@ if (process.env.NODE_ENV === "development") {
   };
 
   if (!globalWithMongo._mongoClient) {
-    globalWithMongo._mongoClient = new MongoClient(uri);
+    globalWithMongo._mongoClient = new MongoClient(getDbUri());
   }
   client = globalWithMongo._mongoClient;
 } else {
   // In production mode, it's best to not use a global variable.
-  client = new MongoClient(uri);
+  client = new MongoClient(getDbUri());
 }
 
 // Export a module-scoped MongoClient. By doing this in a
