@@ -3,8 +3,12 @@
 import { Collection } from "mongodb";
 import client from "./mongodb";
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
 import { Models } from "@/global";
+
+const DBNAME = process.env.MONGODB_DBNAME;
+const COLLECTIONNAME = process.env.MONGODB_COLLECTION
+  ? process.env.MONGODB_COLLECTION
+  : "urls";
 
 const schema = z
   .string()
@@ -12,7 +16,9 @@ const schema = z
 
 export const processURLfromUser = async (url: URL) => {
   var nurl: Models.nurl;
-  var urlsCollection: Collection = await client.db("nurl").collection("urls");
+  var urlsCollection: Collection = await client
+    .db(DBNAME)
+    .collection(COLLECTIONNAME);
 
   nurl = (await urlsCollection.findOne({ url: url.toString() })) as Models.nurl;
 

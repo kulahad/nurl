@@ -1,9 +1,10 @@
 import { Input, Badge, Button, RetroGrid, Form } from "@/src/components";
 
-import { getDataFromForm, processURLfromUser } from "@/lib/urlparser";
+import { getDataFromForm } from "@/lib/urlparser";
 import Image from "next/image";
 import client from "@/lib/mongodb";
 import Link from "next/link";
+import { cn } from "@/lib/uiutils";
 
 export default async function Home() {
   const isConnected = await getConnectionStatus();
@@ -20,7 +21,12 @@ export default async function Home() {
       <RetroGrid className="text-green" />
 
       <Badge
-        className=" m-2 bg-green-700 absolute top-2 right-2 border-green-400"
+        className={cn(
+          "m-2 text-black absolute top-2 right-2 ",
+          isConnected
+            ? "bg-green-400 border-green-400"
+            : "bg-red-400 border-red-400"
+        )}
         variant="outline"
       >
         {isConnected ? "Online" : "Offline"}
@@ -52,7 +58,7 @@ export default async function Home() {
             className="underline text-green-400"
             target="_blank"
             rel="noopener"
-            href={"https//:kulahad.github.io"}
+            href={"https://kulahad.github.io/"}
           >
             Mohammed Ahad
           </Link>{" "}
