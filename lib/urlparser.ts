@@ -14,7 +14,7 @@ const schema = z
   .string()
   .url("Must be a valid url as such: https://example.org/");
 
-export const processURLfromUser = async (url: URL) => {
+export const handleURLFromUser = async (url: URL) => {
   var nurl: Models.nurl;
   var urlsCollection: Collection = await client
     .db(DBNAME)
@@ -42,15 +42,15 @@ function generateUniqueString(): string {
   return (timestamp + randomPart).slice(-5); // Combine and take the last 5 characters
 }
 
-export const getURLFromId = async (id: string) => {
-  if (!id) {
+export const fetchUrlFromId = async (shortCode: string) => {
+  if (!shortCode) {
     return null;
   }
 
   var nurl = await client
     .db("nurl")
     .collection("urls")
-    .findOne({ shortCode: id });
+    .findOne({ shortCode: shortCode });
 
   if (!nurl) {
     return null;
@@ -59,7 +59,7 @@ export const getURLFromId = async (id: string) => {
   return nurl.url;
 };
 
-export const getIdFromURL = async (url: string) => {
+export const fetchIdFromUrl = async (url: string) => {
   if (!url) {
     return null;
   }
@@ -79,7 +79,7 @@ export async function getDataFromForm(
 ): Promise<{ message: string; data: string; error: string }> {
   try {
     const parsedURL = schema.parse(formdata.get("url"));
-    const nurl = await processURLfromUser(new URL(parsedURL));
+    const nurl = await handleURLFromUser(new URL(parsedURL));
     return { message: "", data: nurl?.shortCode || "", error: "" };
   } catch (error) {
     return handleFormError(error);
